@@ -90,12 +90,12 @@ function MkCard()
     var aPlayerX = aStrX+10; aStrY += 55;
     ctxt.fillText(aPlayer,aPlayerX,aStrY);
 
-    // 好きなスタッフ
+    // ハンナリーズで好きな人
     aWakuX += 655; aWakuY += 0;
     drawRect({ ctx:ctxt, x:aWakuX, y:aWakuY, width:645, height:130, radius: 20, color:"rgba(255, 255, 255, 0.8)"});
     ctxt.font = "30px 'Monotype Corsiva'";
     aStrX = aTitleX+655; aStrY += -55;
-    ctxt.fillText('好きなスタッフ',aTitleX+655,aStrY);
+    ctxt.fillText('ハンナリーズで好きな人',aTitleX+655,aStrY);
     var aStaffX = aStrX+20; aStrY += 55;
     ctxt.fillText(aStaff,aStaffX,aStrY);
 
