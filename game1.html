@@ -168,7 +168,7 @@
           if (matchedCards === shuffledImages.length) {
             clearInterval(timerInterval);
             const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
-            message.textContent = `Congratulations! You matched all the cards in ${elapsedTime} seconds with ${moves} moves!`;
+            message.textContent = `Congratulations! 再度遊ぶ場合は画面を更新してね!`;
           }
         } else {
           setTimeout(() => {
