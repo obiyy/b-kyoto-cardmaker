@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f4f4f9;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(4, 100px);
+      gap: 10px;
+    }
+
+    .card {
+      width: 100px;
+      height: 100px;
+      background-color: gray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+
+    .card img {
+      width: 80%;
+      height: 80%;
+      display: none;
+    }
+
+    .flipped img, .matched img {
+      display: block;
+    }
+
+    .flipped, .matched {
+      background-color: white;
+    }
+
+    .matched {
+      cursor: default;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .start-button {
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .start-button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    .info {
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>京都ハンナリーズ神経衰弱</h1>
+  <button class="start-button" id="startButton">Start Game</button>
+  <div class="info" id="info">Time: 0s | Moves: 0</div>
+  <div class="game-board" id="gameBoard" style="visibility: hidden;"></div>
+  <div class="message" id="message"></div>
+
+  <script>
+    const images = [
+      "card1.jpg", "card2.jpg", "card3.jpg", "card4.jpg","card5.jpg", "card6.jpg", 
+      "card1.jpg", "card2.jpg", "card3.jpg", "card4.jpg","card5.jpg", "card6.jpg", 
+      "card1.jpg", "card2.jpg", "card1.jpg", "card2.jpg", 
+    ];
+
+    const shuffledImages = images.sort(() => Math.random() - 0.5);
+    const gameBoard = document.getElementById('gameBoard');
+    const message = document.getElementById('message');
+    const startButton = document.getElementById('startButton');
+    const info = document.getElementById('info');
+
+    let flippedCards = [];
+    let matchedCards = 0;
+    let moves = 0;
+    let startTime;
+    let timerInterval;
+
+    startButton.addEventListener('click', startGame);
+
+    function startGame() {
+      startButton.disabled = true;
+      gameBoard.style.visibility = 'visible';
+      message.textContent = '';
+      moves = 0;
+      matchedCards = 0;
+      info.textContent = `Time: 0s | Moves: 0`;
+      startTime = Date.now();
+      createCards();
+      startTimer();
+    }
+
+    function createCards() {
+      gameBoard.innerHTML = '';
+      shuffledImages.forEach((image, index) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.image = image;
+        card.dataset.index = index;
+
+        const img = document.createElement('img');
+        img.src = image;
+        img.alt = "Memory card";
+
+        card.appendChild(img);
+        card.addEventListener('click', handleCardClick);
+        gameBoard.appendChild(card);
+      });
+    }
+
+    function handleCardClick(e) {
+      const card = e.target.closest('.card');
+      const index = card.dataset.index;
+
+      if (card.classList.contains('flipped') || card.classList.contains('matched')) {
+        return;
+      }
+
+      card.classList.add('flipped');
+      flippedCards.push(card);
+      moves++;
+      updateInfo();
+
+      if (flippedCards.length === 2) {
+        const [firstCard, secondCard] = flippedCards;
+
+        if (firstCard.dataset.image === secondCard.dataset.image) {
+          firstCard.classList.add('matched');
+          secondCard.classList.add('matched');
+          matchedCards += 2;
+          flippedCards = [];
+
+          if (matchedCards === shuffledImages.length) {
+            clearInterval(timerInterval);
+            const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
+            message.textContent = `Congratulations! You matched all the cards in ${elapsedTime} seconds with ${moves} moves!`;
+          }
+        } else {
+          setTimeout(() => {
+            firstCard.classList.remove('flipped');
+            secondCard.classList.remove('flipped');
+            flippedCards = [];
+          }, 700);
+        }
+      }
+    }
+
+    function updateInfo() {
+      const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
+      info.textContent = `Time: ${elapsedTime}s | Moves: ${moves}`;
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(updateInfo, 100);
+    }
+  </script>
+</body>
+</html>
