@@ -12,7 +12,7 @@
   <meta property="og:title" content="神経衰弱">
   <meta property="og:type" content="blog">
   <meta property="og:url" content="https://kyoto-bcardmaker.netlify.app/game1.html">
-  <meta property="og:image" content="https://kyoto-bcardmaker.netlify.app/card1.jpg">
+  <meta property="og:image" content="https://kyoto-bcardmaker.netlify.app/card2.jpg">
   <meta property="og:description" content="神経衰弱">
   <style>
     body {
@@ -27,7 +27,7 @@
     }
 
     h1 {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .game-board {
@@ -68,13 +68,13 @@
     }
 
     .message {
-      margin-top: 20px;
+      margin-top: 10px;
       font-size: 18px;
       font-weight: bold;
     }
 
     .start-button {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
@@ -96,6 +96,7 @@
   </style>
 </head>
 <body>
+  <div><a href="./index.html">TOPへ戻る</a></div>
   <h1>神経衰弱</h1>
   <button class="start-button" id="startButton">Start Game</button>
   <div class="info" id="info">Time: 0s | Moves: 0</div>
@@ -185,7 +186,7 @@
             firstCard.classList.remove('flipped');
             secondCard.classList.remove('flipped');
             flippedCards = [];
-          }, 500);
+          }, 300);
         }
       }
     }
