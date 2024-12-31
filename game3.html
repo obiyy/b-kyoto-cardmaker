@@ -101,6 +101,7 @@
     let result;
     const message = document.getElementById('message');
     const startButton = document.getElementById('startButton');
+    const submitButton = document.getElementById('submitButton');
     const info = document.getElementById('info');
     const container = document.getElementById('gameContainer');
 
@@ -126,6 +127,7 @@
       document.getElementById('gameInfo').textContent = '';
       container.innerHTML = '';
       container.style.pointerEvents = 'auto';
+      submitButton.style.display = 'none';
     
       // Initialize tiles
       for (let i = 0; i < rows * cols; i++) {
@@ -212,6 +214,9 @@
       document.getElementById('gameInfo').textContent = won
         ? 'Congratulations!'
         : 'ゲームオーバー';
+      submitButton.style.display = won
+        ? 'auto!'
+        : 'none';
     }
 
     function checkWin() {
