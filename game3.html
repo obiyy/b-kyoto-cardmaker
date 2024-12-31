@@ -216,6 +216,12 @@
       submitButton.style.display = won
         ? ''
         : 'none';
+      tiles.forEach((tile, index) => {
+        if (tile.hasMine) {
+            tile.element.classList.add('mine');
+        }
+      });
+
     }
 
     function checkWin() {
